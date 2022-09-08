@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-parameter-table
+      author: Farhan
+      changes:
+        - createTable:
+            tableName: parameter
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: key
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: text
+                  constraints:
+                    nullable: true
+              - column:
+                  name: param_group
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: value
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: value_type
+                  type: varchar(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: create_date_time
+                  type: DATETIME
+                  constraints:
+                    nullable: true
+              - column:
+                  name: update_date_time
+                  type: DATETIME
+                  constraints:
+                    nullable: true
