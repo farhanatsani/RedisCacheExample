@@ -17,16 +17,14 @@ public class WeatherWebClient implements WebClientInterface {
     private final ParameterService redisParameterServiceImpl;
 
     @Override
-    @Cacheable(key = "'weather.region=' + #parameters.get(\"region\") + ',' + #root.method.hallo",
+    @Cacheable(key = "'weather.region=' + #parameters.get(\"region\")",
             value = "120sExp")
     public Object get(Map<String, String> parameters) {
         final String urlByRegionUrl = redisParameterServiceImpl
                 .getParameterByKey("URL_WEATHER_BY_REGION")
                 .getValue();
 
-        String hallo = "hallo";
-
-        String response = webClientConfig
+        return webClientConfig
                 .webClientWeather()
                 .get()
                 .uri(uriBuilder -> uriBuilder
@@ -42,7 +40,6 @@ public class WeatherWebClient implements WebClientInterface {
                         clientResponse -> clientResponse.bodyToMono(String.class).map(RuntimeException::new))
                 .bodyToMono(String.class)
                 .block();
-        return response;
     }
 
     @Override
