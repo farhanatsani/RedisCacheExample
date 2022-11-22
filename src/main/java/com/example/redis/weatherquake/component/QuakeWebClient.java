@@ -1,36 +1,36 @@
-package com.example.redis.components;
+package com.example.redis.weatherquake.component;
 
+import com.example.redis.base.ParameterConstants;
+import com.example.redis.components.WebClientInterface;
 import com.example.redis.configuration.WebClientConfig;
-import com.example.redis.parameters.ParameterService;
+import com.example.redis.parameter.service.ParameterService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+@Slf4j
 @Component
 @AllArgsConstructor
-public class WeatherWebClient implements WebClientInterface {
-
+public class QuakeWebClient implements WebClientInterface {
     private final WebClientConfig webClientConfig;
     private final ParameterService redisParameterServiceImpl;
-
     @Override
-    @Cacheable(key = "'weather.region=' + #parameters.get(\"region\")",
+    @Cacheable(key = "'quake.info'",
             value = "120sExp")
     public Object get(Map<String, String> parameters) {
-        final String urlByRegionUrl = redisParameterServiceImpl
-                .getParameterByKey("URL_WEATHER_BY_REGION")
+        final String urlQuake = redisParameterServiceImpl
+                .getParameterByKey(ParameterConstants.URL_QUAKE_INFO)
                 .getValue();
 
         return webClientConfig
-                .webClientWeather()
+                .weatherQuakeWebClient()
                 .get()
                 .uri(uriBuilder -> uriBuilder
-                        .path(urlByRegionUrl)
-                        .path("/")
-                        .path(parameters.get("region"))
+                        .path(urlQuake)
                         .build()
                 )
                 .retrieve()

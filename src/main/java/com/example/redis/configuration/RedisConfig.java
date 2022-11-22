@@ -27,14 +27,12 @@ import java.time.Duration;
 @Configuration
 @EnableCaching
 public class RedisConfig {
-
     @Value("${spring.redis.host}")
     private String host;
     @Value("${spring.redis.port}")
     private Integer port;
     @Value("${spring.redis.password}")
     private String password;
-
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() {
         Duration readTimeout = Duration.ofMillis(30 * 1000L);
@@ -47,8 +45,8 @@ public class RedisConfig {
 
         JedisClientConfiguration clientConfiguration = JedisClientConfiguration
                 .builder()
-                .readTimeout(readTimeout).
-                connectTimeout(connectTimeout)
+                .readTimeout(readTimeout)
+                .connectTimeout(connectTimeout)
                 .usePooling()
                 .build();
 

@@ -1,6 +1,6 @@
-package com.example.redis.repository;
+package com.example.redis.parameter.repository;
 
-import com.example.redis.parameters.Parameter;
+import com.example.redis.parameter.entity.Parameter;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

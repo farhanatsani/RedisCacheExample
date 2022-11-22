@@ -1,6 +1,7 @@
-package com.example.redis.parameters;
+package com.example.redis.parameter.service;
 
-import com.example.redis.repository.ParameterRepository;
+import com.example.redis.parameter.entity.Parameter;
+import com.example.redis.parameter.repository.ParameterRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -22,11 +23,11 @@ public class RedisParameterServiceImpl implements ParameterService {
             value = "60sExp")
     public Parameter getParameterByKey(String key) {
 
-        log.info("getParameterByKey from Redis {}", key);
-
-        return parameterRepository
+        Parameter parameter = parameterRepository
                 .findByKey(key)
                 .get();
+
+        return parameter;
     }
 
     @Override

@@ -1,4 +1,6 @@
-package com.example.redis.parameters;
+package com.example.redis.parameter.service;
+
+import com.example.redis.parameter.entity.Parameter;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.redis.components;
+package com.example.redis.currency;
 
 import org.springframework.stereotype.Component;
 
