@@ -25,13 +25,13 @@ public class GeospatialExampleTest {
         redisTemplate.opsForGeo().add("branches", pointBranch1, "pointBranch1");
         redisTemplate.opsForGeo().add("branches", pointBranch2, "pointBranch2");
 
-        List<Point> point1ListCache = redisTemplate.opsForGeo().position("pointBranch1");
+        List<Point> point1ListCache = redisTemplate.opsForGeo().position("branches", "pointBranch1");
         for(Point point: point1ListCache) {
-            System.out.print("PointBranch-1 : " + point.getX() + ", " + point.getY());
+            System.out.println("PointBranch-1 : " + point.getX() + ", " + point.getY());
         }
 
         Distance distance = redisTemplate.opsForGeo().distance("branches", "pointBranch1", "pointBranch2");
         double d = distance.getValue();
-
+        System.out.println("distance : " + d + " " + distance.getUnit());
     }
 }
