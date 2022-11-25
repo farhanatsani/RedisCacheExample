@@ -16,14 +16,14 @@ import java.util.List;
 public class ListExampleTest {
 
     @Autowired
-    private RedisTemplate<String, Customer> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     @Test
     void testRedisList() {
         /*
             List of String example
         */
-        /*
+
         redisTemplate.opsForList().leftPush("employees", "Adi");
         redisTemplate.opsForList().leftPush("employees", "Rara");
         redisTemplate.opsForList().leftPush("employees", "Hendra");
@@ -32,23 +32,23 @@ public class ListExampleTest {
         for(String s: stringList) {
             System.out.println("s " + s);
         }
-        */
 
 
-        List<Customer> customers = List.of(
-                Customer.builder().id(1).name("John").phoneNo("0811111").address("Jakarta").build(),
-                Customer.builder().id(2).name("Doe").phoneNo("0811112").address("Bandung").build()
-        );
 
-        BoundListOperations blo = redisTemplate.boundListOps("customers");
-        blo.expire(Duration.ofHours(1L));
-        blo.leftPushAll(customers);
-
-        Customer customerAdd1 = Customer.builder().id(1).name("JohnAdd1").phoneNo("0811113").address("Jakarta").build();
-        blo.leftPush(customerAdd1);
-
-        Customer customerAdd2 = Customer.builder().id(1).name("JohnAdd2").phoneNo("0811113").address("Jakarta").build();
-        blo.leftPush(customerAdd2);
+//        List<Customer> customers = List.of(
+//                Customer.builder().id(1).name("John").phoneNo("0811111").address("Jakarta").build(),
+//                Customer.builder().id(2).name("Doe").phoneNo("0811112").address("Bandung").build()
+//        );
+//
+//        BoundListOperations blo = redisTemplate.boundListOps("customers");
+//        blo.expire(Duration.ofHours(1L));
+//        blo.leftPushAll(customers);
+//
+//        Customer customerAdd1 = Customer.builder().id(1).name("JohnAdd1").phoneNo("0811113").address("Jakarta").build();
+//        blo.leftPush(customerAdd1);
+//
+//        Customer customerAdd2 = Customer.builder().id(1).name("JohnAdd2").phoneNo("0811113").address("Jakarta").build();
+//        blo.leftPush(customerAdd2);
 
     }
 
