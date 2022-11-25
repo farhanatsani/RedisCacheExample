@@ -10,10 +10,8 @@ import org.springframework.test.context.TestPropertySource;
 @SpringBootTest
 @TestPropertySource("classpath:application.properties")
 public class BitmapExampleTest {
-
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
-
     @Test
     void testRedisBitmap() {
         BitFieldSubCommands bitFieldSubCommands = BitFieldSubCommands.create();
