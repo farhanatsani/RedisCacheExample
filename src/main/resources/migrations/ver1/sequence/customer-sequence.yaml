@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      - id: create-customer-sequence
+      - author: Farhan Atsani
+      - changes:
+        - createSequence:
+            sequenceName: customer_sequence
+            startValue: 1
+            incrementBy: 1
+            schemaName: public
+            cycle: true
+

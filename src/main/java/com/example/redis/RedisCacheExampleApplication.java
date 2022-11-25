@@ -23,12 +23,8 @@ public class RedisCacheExampleApplication {
 		List<Parameter> initParamExample = List.of(
 			Parameter.builder().key("HTTP_RESPONSE_TIMEOUT").description("Durasi timeout Http Request").paramGroup("UTIL").value("60").valueType("SECOND").build(),
 			Parameter.builder().key("BASE_URL_CUACA_GEMPA").description("Base URL Cuaca Gempa API").paramGroup("Weather").value("https://cuaca-gempa-rest-api.vercel.app/").valueType("URL").build(),
-			Parameter.builder().key("BASE_URL_CURRENCY").description("Base URL Currency API").paramGroup("Currency").value("https://api-exchange-rates.herokuapp.com/").valueType("URL").build(),
-			Parameter.builder().key("BASE_URL_KBBI").description("Base URL KBBI API").paramGroup("Kamus").value("https://kbbi-api-amm.herokuapp.com/").valueType("URL").build(),
 			Parameter.builder().key("URL_WEATHER_BY_REGION").description("URL untuk menampilkan cuaca berdasarkan region").paramGroup("Weather").value("/weather").valueType("URL").build(),
-			Parameter.builder().key("URL_QUAKE_INFO").description("URL untuk menampilkan info gempa").paramGroup("Quake").value("/quake").valueType("URL").build(),
-			Parameter.builder().key("URL_CURRENCY_CALCULATOR").description("URL untuk menghitung nilai tukar mata uang").paramGroup("Currency").value("/calculator").valueType("URL").build(),
-			Parameter.builder().key("URL_KBBI_WORD").description("URL untuk mencari kata pada KBBI").paramGroup("Kamus").value("/search").valueType("URL").build()
+			Parameter.builder().key("URL_QUAKE_INFO").description("URL untuk menampilkan info gempa").paramGroup("Quake").value("/quake").valueType("URL").build()
 		);
 		databaseParameterServiceImpl.saveAll(initParamExample);
 	}

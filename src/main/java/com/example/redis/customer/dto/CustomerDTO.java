@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import javax.validation.constraints.NotNull;
+
 @SuperBuilder
 @Getter
 @Setter
@@ -14,9 +16,12 @@ import lombok.experimental.SuperBuilder;
 public class CustomerDTO {
     private Integer id;
     @JsonAlias("customer_name")
+    @NotNull(message = "Customer Name cannot be null")
     private String customerName;
     @JsonAlias("phone_no")
+    @NotNull(message = "Customer Phone no cannot be null")
     private String phoneNo;
     @JsonAlias("address")
+    @NotNull(message = "Customer Address cannot be null")
     private String address;
 }

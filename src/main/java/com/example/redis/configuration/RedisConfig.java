@@ -16,6 +16,8 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.GeoOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
@@ -26,40 +28,55 @@ import java.time.Duration;
 
 @Configuration
 @EnableCaching
-public class RedisConfig {
+public class RedisConfig<T> {
     @Value("${spring.redis.host}")
     private String host;
     @Value("${spring.redis.port}")
     private Integer port;
     @Value("${spring.redis.password}")
     private String password;
-    @Bean
-    public JedisConnectionFactory jedisConnectionFactory() {
-        Duration readTimeout = Duration.ofMillis(30 * 1000L);
-        Duration connectTimeout = Duration.ofMillis(3 * 1000L);
-
+    public LettuceConnectionFactory lettuceConnectionFactory() {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(host);
         redisStandaloneConfiguration.setPort(port);
         redisStandaloneConfiguration.setPassword(password);
 
-        JedisClientConfiguration clientConfiguration = JedisClientConfiguration
+        LettuceClientConfiguration clientConfiguration = LettuceClientConfiguration
                 .builder()
-                .readTimeout(readTimeout)
-                .connectTimeout(connectTimeout)
-                .usePooling()
                 .build();
 
-        return new JedisConnectionFactory (
-                        redisStandaloneConfiguration,
-                        clientConfiguration
+        return new LettuceConnectionFactory(
+                redisStandaloneConfiguration,
+                clientConfiguration
         );
     }
+//    @Bean
+//    public JedisConnectionFactory jedisConnectionFactory() {
+//        Duration readTimeout = Duration.ofMillis(30 * 1000L);
+//        Duration connectTimeout = Duration.ofMillis(3 * 1000L);
+//
+//        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+//        redisStandaloneConfiguration.setHostName(host);
+//        redisStandaloneConfiguration.setPort(port);
+//        redisStandaloneConfiguration.setPassword(password);
+//
+//        JedisClientConfiguration clientConfiguration = JedisClientConfiguration
+//                .builder()
+//                .readTimeout(readTimeout)
+//                .connectTimeout(connectTimeout)
+//                .usePooling()
+//                .build();
+//
+//        return new JedisConnectionFactory (
+//                        redisStandaloneConfiguration,
+//                        clientConfiguration
+//        );
+//    }
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate() {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(jedisConnectionFactory());
+    public RedisTemplate<String, T> redisTemplate() {
+        RedisTemplate<String, T> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(lettuceConnectionFactory());
         redisTemplate.setKeySerializer(RedisSerializer.string());
         redisTemplate.setValueSerializer(getJackson2JsonRedisSerializer());
         redisTemplate.setHashKeySerializer(RedisSerializer.string());
@@ -109,13 +126,6 @@ public class RedisConfig {
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
         jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
         return jackson2JsonRedisSerializer;
-    }
-
-    @Bean
-    public GeoOperations<String, String> geoOperations() {
-        RedisTemplate<String, String> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(jedisConnectionFactory());
-        return redisTemplate.opsForGeo();
     }
 
 }

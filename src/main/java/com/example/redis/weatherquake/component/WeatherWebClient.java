@@ -1,24 +1,23 @@
 package com.example.redis.weatherquake.component;
 
 import com.example.redis.base.ParameterConstants;
-import com.example.redis.components.WebClientInterface;
+import com.example.redis.base.BaseWebClient;
 import com.example.redis.configuration.WebClientConfig;
 import com.example.redis.parameter.service.ParameterService;
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
+@Slf4j
 @Component
 @AllArgsConstructor
-public class WeatherWebClient implements WebClientInterface {
+public class WeatherWebClient implements BaseWebClient {
     private final WebClientConfig webClientConfig;
     private final ParameterService redisParameterServiceImpl;
     @Override
-    @Cacheable(key = "'weather.region=' + #parameters.get(\"region\")",
-            value = "120sExp")
     public Object get(Map<String, String> parameters) {
         final String urlByRegionUrl = redisParameterServiceImpl
                 .getParameterByKey(ParameterConstants.URL_WEATHER_BY_REGION)

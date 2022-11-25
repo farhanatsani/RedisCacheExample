@@ -11,4 +11,6 @@ public class ParameterConstants {
     public static final String URL_QUAKE_INFO = "URL_QUAKE_INFO";
     public static final String BASE_URL_KBBI = "BASE_URL_KBBI";
 
+    public static final String URL_CURRENCY_CALCULATOR = "URL_CURRENCY_CALCULATOR";
+
 }

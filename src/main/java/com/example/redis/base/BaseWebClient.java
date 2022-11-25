@@ -1,8 +1,8 @@
-package com.example.redis.components;
+package com.example.redis.base;
 
 import java.util.Map;
 
-public interface WebClientInterface {
+public interface BaseWebClient {
 
     Object get(Map<String, String> parameters);
 

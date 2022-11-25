@@ -8,7 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -30,8 +32,20 @@ public class CustomerService {
         if(customerOptional.isPresent()) {
             throw new EntityExistsException("Customer already exist");
         }
+
+        log.info("customerDTO {}", customerDTO.toString());
+
         Customer customerSave = customerRepository
                 .save(CustomerMapper.toCustomer(customerDTO));
         return CustomerMapper.toCustomerDTO(customerSave);
+    }
+    public List<CustomerDTO> findCustomers() {
+        List<Customer> customers = customerRepository.findAll();
+
+        List<CustomerDTO> allCustomerDTO = customers.stream()
+                .map(customer -> CustomerMapper.toCustomerDTO(customer))
+                .collect(Collectors.toList());
+
+        return allCustomerDTO;
     }
 }

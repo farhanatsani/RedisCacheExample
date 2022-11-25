@@ -1,7 +1,7 @@
 package com.example.redis.weatherquake.controller;
 
-import com.example.redis.weatherquake.component.QuakeWebClient;
-import com.example.redis.weatherquake.component.WeatherWebClient;
+import com.example.redis.weatherquake.service.QuakeService;
+import com.example.redis.weatherquake.service.WeatherService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -10,20 +10,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-import java.util.Map;
-
 @Slf4j
 @RestController
 @AllArgsConstructor
 public class WeatherQuakeController {
-    private final WeatherWebClient weatherWebClient;
-    private final QuakeWebClient quakeWebClient;
+    private final WeatherService weatherServiceImpl;
+    private final QuakeService quakeServiceImpl;
     @GetMapping(value = "/api/weathers/{region}")
     public ResponseEntity<?> getWeather(@PathVariable String region) {
 
-        Map<String, String> parameters = Collections.singletonMap("region", region);
-        String weather = (String) weatherWebClient.get(parameters);
+        String weather = weatherServiceImpl.getWeatherByRegion(region);
 
         if(weather == null) {
             throw new NullPointerException("Empty response");
@@ -36,8 +32,7 @@ public class WeatherQuakeController {
     @GetMapping(value = "/api/quake")
     public ResponseEntity<?> getQuakeInfo() {
 
-        Map<String, String> parameters = Collections.singletonMap("region", "");
-        String weather = (String) quakeWebClient.get(parameters);
+        String weather = quakeServiceImpl.getQuakeInfo();
 
         if(weather == null) {
             throw new NullPointerException("Empty response");

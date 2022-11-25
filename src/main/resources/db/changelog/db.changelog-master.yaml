@@ -3,3 +3,5 @@ databaseChangeLog:
       file: migrations/ver1/customer-table.yaml
   - include:
       file: migrations/ver1/parameter-table.yaml
+  - include:
+      file: migrations/ver1/sequence/customer-sequence.yaml
