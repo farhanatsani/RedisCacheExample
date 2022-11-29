@@ -1,4 +1,4 @@
-# Redis Cache and Liquibase Example
+# Spring Boot Redis Cache and Liquibase Example
 
 This repository is about using Redis cache on Spring Boot. There are separated example of using Redis, first of all i'm  using @Cacheable, @CachePut. The other one is using Redis template.
 
