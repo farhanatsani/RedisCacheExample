@@ -21,7 +21,8 @@ import java.time.LocalDateTime;
 public class Parameter implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "parameter_id_seq", sequenceName = "parameter_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "parameter_id_seq")
     private Integer id;
 
     @Column(unique = true, nullable = false, length = 30)
